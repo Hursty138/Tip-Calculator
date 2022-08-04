@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>MainActivity.kt</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainActivity.kt</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.tiptime</span>
+
+<span class="s1">import androidx.appcompat.app.AppCompatActivity</span>
+<span class="s1">import android.os.Bundle</span>
+<span class="s1">import com.example.tiptime.databinding.ActivityMainBinding</span>
+<span class="s1">import java.text.NumberFormat</span>
+
+<span class="s0">class </span><span class="s1">MainActivity : AppCompatActivity() {</span>
+
+    <span class="s1">private lateinit </span><span class="s0">var </span><span class="s1">binding: ActivityMainBinding</span>
+
+    <span class="s1">override </span><span class="s0">fun </span><span class="s1">onCreate(savedInstanceState: Bundle?) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span>
+        <span class="s1">binding = ActivityMainBinding.inflate(layoutInflater)</span>
+        <span class="s1">setContentView(binding.root)</span>
+
+        <span class="s1">binding.calculateButton.setOnClickListener{calculateTip()}</span>
+
+    <span class="s1">}</span>
+
+    <span class="s1">private </span><span class="s0">fun </span><span class="s1">calculateTip() {</span>
+
+        <span class="s0">val </span><span class="s1">stringInTextField = binding.costOfService.text.toString()</span>
+        <span class="s0">val </span><span class="s1">cost = stringInTextField.toDoubleOrNull()</span>
+        <span class="s0">if </span><span class="s1">(cost == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">binding.tipResult.text = </span><span class="s2">&quot;&quot;</span>
+            <span class="s0">return</span>
+        <span class="s1">}</span>
+        <span class="s0">val </span><span class="s1">tipPercentage = </span><span class="s0">when </span><span class="s1">(binding.tipOptions.checkedRadioButtonId) {</span>
+            <span class="s1">R.id.option_twenty_percent -&gt; </span><span class="s3">0.20</span>
+            <span class="s1">R.id.option_eighteen_percent -&gt; </span><span class="s3">0.18</span>
+            <span class="s0">else </span><span class="s1">-&gt; </span><span class="s3">0.15</span>
+
+        <span class="s1">}</span>
+
+        <span class="s0">var </span><span class="s1">tip = tipPercentage * cost</span>
+        <span class="s0">if </span><span class="s1">(binding.roundUpSwitch.isChecked) {</span>
+            <span class="s1">tip = kotlin.math.ceil(tip)</span>
+        <span class="s1">}</span>
+
+        <span class="s1">NumberFormat.getCurrencyInstance()</span>
+
+        <span class="s0">val </span><span class="s1">formattedTip = NumberFormat.getCurrencyInstance().format(tip)</span>
+        <span class="s1">binding.tipResult.text = getString(R.string.tip_amount</span><span class="s0">, </span><span class="s1">formattedTip)</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>
